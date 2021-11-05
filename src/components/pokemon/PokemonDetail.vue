@@ -30,7 +30,11 @@
         <button-tag @click.native="clipboard()" tag="a" class="text-lg"
           >Share to my friends</button-tag
         >
-        <pokemon-icon-fav :is-fav="false"></pokemon-icon-fav>
+        <pokemon-icon-fav
+          :is-fav="isFav"
+          @add="addFavorite"
+          @remove="removeFavorite"
+        ></pokemon-icon-fav>
       </div>
     </div>
   </modal>
@@ -44,6 +48,10 @@ export default {
   props: {
     pokemon: {
       type: Object,
+      required: true
+    },
+    isFav: {
+      type: Boolean,
       required: true
     }
   },
@@ -70,6 +78,12 @@ export default {
       input.select()
       document.execCommand("Copy")
       input.remove()
+    },
+    addFavorite() {
+      this.$emit("addFavorite", this.pokemon.name)
+    },
+    removeFavorite() {
+      this.$emit("removeFavorite", this.pokemon.name)
     }
   },
   computed: {

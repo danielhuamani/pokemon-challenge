@@ -28,7 +28,10 @@
       <pokemon-detail
         v-if="isModal"
         :pokemon="pokemonSelected"
+        :is-fav="isFav"
         @close="pokemonCloseMoldal"
+        @addFavorite="addFavorite"
+        @removeFavorite="removeFavorite"
       ></pokemon-detail>
     </div>
   </layout>
@@ -46,6 +49,7 @@ import PokemonRepository from "@/repositories/PokemonRepository"
 import PokemonFavoriteRepository from "@/repositories/PokemonFavoriteRepository"
 
 export default {
+  name: "Pokemon",
   components: {
     Layout,
     PokemonSearch,
@@ -64,9 +68,10 @@ export default {
       pokemonSelected: {
         name: "",
         weight: "",
-        hegiht: "",
+        height: "",
         img: "",
-        types: []
+        types: [],
+        isFav: false
       },
       isLoad: true,
       isModal: false
@@ -105,9 +110,7 @@ export default {
       }
     },
     pokemonCloseMoldal() {
-      console.log("closessse")
       this.isModal = false
-      console.log(this.isModal, "abacas")
     },
     changeView(view) {
       this.view = view
@@ -123,6 +126,9 @@ export default {
         this.pokemonSelected["types"] = data.types.map((type) => {
           return type.type.name
         })
+        this.pokemonSelected["isFav"] = !(
+          this.pokemonsFavorites.findIndex((fav) => fav.name == name) === -1
+        )
         this.isModal = true
       } catch (error) {
         console.log(error)
@@ -152,6 +158,13 @@ export default {
       } else {
         return this.pokemonsFavoritesFilter.length > 0
       }
+    },
+    isFav() {
+      return !(
+        this.pokemonsFavorites.findIndex(
+          (fav) => fav.name == this.pokemonSelected.name
+        ) === -1
+      )
     }
   }
 }

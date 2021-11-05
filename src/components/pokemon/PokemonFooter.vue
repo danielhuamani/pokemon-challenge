@@ -1,5 +1,5 @@
 <template>
-  <div class="py-5 fixed z-10 bottom-0 bg-white left-0 right-0 shadow-sm">
+  <div class="py-5 fixed z-10 bottom-0 bg-white left-0 right-0 shadow-lg">
     <container>
       <div class="flex">
         <button-tag
