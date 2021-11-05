@@ -10,7 +10,9 @@ module.exports = {
         main: "#F22539",
         "main-hover": "#C00F20",
         disabled: "#BFBFBF",
-        body: "#F9F9F9"
+        body: "#F9F9F9",
+        text: "#5E5E5E",
+        border: "#E8E8E8"
       }
     }
   },

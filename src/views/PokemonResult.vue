@@ -11,6 +11,7 @@
           v-if="view === 'ALL_LIST'"
           :pokemons="pokemonsFilter"
           :pokemons-favorites="pokemonsFavorites"
+          @selected="changePokemonSelected"
           @addFavorite="addFavorite"
           @removeFavorite="removeFavorite"
         ></pokemon-list>
@@ -18,11 +19,17 @@
           v-else
           :pokemons="pokemonsFavoritesFilter"
           :pokemons-favorites="pokemonsFavorites"
+          @selected="changePokemonSelected"
           @addFavorite="addFavorite"
           @removeFavorite="removeFavorite"
         ></pokemon-list>
       </div>
       <pokemon-footer @changeView="changeView" :view="view"></pokemon-footer>
+      <pokemon-detail
+        v-if="isModal"
+        :pokemon="pokemonSelected"
+        @close="pokemonCloseMoldal"
+      ></pokemon-detail>
     </div>
   </layout>
 </template>
@@ -34,6 +41,7 @@ import PokemonSearch from "@/components/pokemon/PokemonSearch"
 import PokemonList from "@/components/pokemon/PokemonList"
 import PokemonFooter from "@/components/pokemon/PokemonFooter"
 import PokemonEmptyList from "@/components/pokemon/PokemonEmptyList"
+import PokemonDetail from "@/components/pokemon/PokemonDetail"
 import PokemonRepository from "@/repositories/PokemonRepository"
 import PokemonFavoriteRepository from "@/repositories/PokemonFavoriteRepository"
 
@@ -44,6 +52,7 @@ export default {
     PokemonList,
     PokemonFooter,
     PokemonEmptyList,
+    PokemonDetail,
     Loading
   },
   data() {
@@ -52,7 +61,15 @@ export default {
       view: "ALL_LIST",
       pokemons: [],
       pokemonsFavorites: [],
-      isLoad: true
+      pokemonSelected: {
+        name: "",
+        weight: "",
+        hegiht: "",
+        img: "",
+        types: []
+      },
+      isLoad: true,
+      isModal: false
     }
   },
   created() {
@@ -87,8 +104,29 @@ export default {
         console.log(error)
       }
     },
+    pokemonCloseMoldal() {
+      console.log("closessse")
+      this.isModal = false
+      console.log(this.isModal, "abacas")
+    },
     changeView(view) {
       this.view = view
+    },
+    async changePokemonSelected(name) {
+      console.log(name)
+      try {
+        const { data } = await PokemonRepository.getByName(name)
+        this.pokemonSelected["name"] = data.name
+        this.pokemonSelected["weight"] = data.weight
+        this.pokemonSelected["height"] = data.name
+        this.pokemonSelected["img"] = data.sprites.other["official-artwork"].front_default
+        this.pokemonSelected["types"] = data.types.map((type) => {
+          return type.type.name
+        })
+        this.isModal = true
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
   computed: {
