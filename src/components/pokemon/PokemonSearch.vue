@@ -11,6 +11,7 @@
       placeholder="Search"
       :value="value"
       @input="$emit('input', $event.target.value)"
+      data-testid="input"
     />
   </div>
 </template>

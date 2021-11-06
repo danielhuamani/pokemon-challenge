@@ -1,10 +1,13 @@
 <template>
-  <div class="p-3 bg-white rounded-md shadow-sm mb-2 flex justify-between items-center">
-    <p @click="selected()" class="text-lg cursor-pointer">
+  <div
+    class="p-3 bg-white rounded-md shadow-sm mb-2 flex justify-between items-center"
+    data-testid="pokemon-item"
+  >
+    <p @click="selected()" class="text-lg cursor-pointer" data-testid="pokemon-name">
       {{ name | capitalize }}
     </p>
     <pokemon-icon-fav
-      :is-fav="isStarActive()"
+      :is-fav="isFav()"
       @add="addFavorite"
       @remove="removeFavorite"
     ></pokemon-icon-fav>
@@ -34,7 +37,7 @@ export default {
     removeFavorite() {
       this.$emit("removeFavorite", this.name)
     },
-    isStarActive() {
+    isFav() {
       return !(this.pokemonsFavorites.findIndex((fav) => fav.name == this.name) === -1)
     },
     selected() {

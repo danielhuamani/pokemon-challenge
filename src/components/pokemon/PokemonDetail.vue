@@ -1,26 +1,26 @@
 <template>
   <modal @close="close">
     <div class="w-full h-52 pt-3 pokemon-bg">
-      <img class="pokemon-img" :src="pokemon.img" alt="" />
+      <img class="pokemon-img" :src="pokemon.img" alt="" data-testid="pokemon-img" />
     </div>
     <div class="p-4">
       <ul>
         <li class="py-2 pokemon-border">
-          <p class="text-lg text-text">
+          <p class="text-lg text-text" data-testid="pokemon-name">
             <span class="font-semibold">Name:</span> {{ pokemon.name }}
           </p>
         </li>
         <li class="py-2 pokemon-border">
-          <p class="text-lg text-text">
+          <p class="text-lg text-text" data-testid="pokemon-weight">
             <span class="font-semibold">Weight:</span> {{ pokemon.weight }}
           </p>
         </li>
         <li class="py-2 pokemon-border">
-          <p class="text-lg text-text">
+          <p class="text-lg text-text" data-testid="pokemon-hegiht">
             <span class="font-semibold">Height:</span> {{ pokemon.height }}
           </p>
         </li>
-        <li class="py-2 pokemon-border">
+        <li class="py-2 pokemon-border" data-testid="pokemon-types">
           <p class="text-lg text-text">
             <span class="font-semibold">Types:</span> {{ getTypes }}
           </p>
