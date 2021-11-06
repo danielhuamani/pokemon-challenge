@@ -72,8 +72,7 @@ export default {
         weight: "",
         height: "",
         img: "",
-        types: [],
-        isFav: false
+        types: []
       },
       isLoad: true,
       isModal: false
@@ -118,7 +117,6 @@ export default {
       this.view = view
     },
     async changePokemonSelected(name) {
-      console.log(name)
       try {
         const { data } = await PokemonRepository.getByName(name)
         this.pokemonSelected["name"] = data.name
@@ -128,9 +126,6 @@ export default {
         this.pokemonSelected["types"] = data.types.map((type) => {
           return type.type.name
         })
-        this.pokemonSelected["isFav"] = !(
-          this.pokemonsFavorites.findIndex((fav) => fav.name == name) === -1
-        )
         this.isModal = true
       } catch (error) {
         console.log(error)

@@ -7,6 +7,7 @@
           tag="a"
           width="50%"
           class="mr-2 py-2 flex justify-center"
+          data-testid="button-all-list"
           :variant="view === 'ALL_LIST' ? 'main' : 'grey'"
         >
           <img src="@/assets/icons/list.png" alt="" />
@@ -18,6 +19,7 @@
           :variant="view === 'FAVORITES' ? 'main' : 'grey'"
           width="50%"
           class="ml-2 py-2 flex justify-center"
+          data-testid="button-favorite"
         >
           <img src="@/assets/icons/favorite.png" alt="" />
           <span class="ml-3 text-md font-bold">Favorites</span>

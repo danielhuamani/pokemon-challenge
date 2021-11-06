@@ -71,7 +71,6 @@ export default {
         height: ${this.pokemon.height},
         types: ${this.getTypes}
       `
-      console.log(info, "info")
       let input = document.createElement("textarea")
       document.body.appendChild(input)
       input.value = info
