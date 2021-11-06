@@ -6,6 +6,7 @@
       class="cursor-pointer"
       src="@/assets/icons/star-active.png"
       alt=""
+      data-testid="fav-active"
     />
     <img
       v-else
@@ -13,6 +14,7 @@
       class="cursor-pointer"
       src="@/assets/icons/star-inactive.png"
       alt=""
+      data-testid="fav-inactive"
     />
   </div>
 </template>

@@ -29,7 +29,7 @@ export default {
         Storage.set("favorites", favorites, Object)
         resolve(favorites)
       } else {
-        reject("this pokemon can't delete because it not exist in favorites")
+        reject("this pokemon can't delete because it not exist in favorites list")
       }
     })
   }

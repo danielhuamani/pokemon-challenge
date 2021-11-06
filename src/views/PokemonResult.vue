@@ -1,39 +1,41 @@
 <template>
   <layout>
-    <loading v-if="isLoad"></loading>
-    <div class="pokemon-list mb-24 mt-8" v-else>
-      <pokemon-search v-model="search"></pokemon-search>
-      <div class="mt-8" v-if="!isEmpty">
-        <pokemon-empty-list></pokemon-empty-list>
-      </div>
-      <div class="mt-8" v-else>
-        <pokemon-list
-          v-if="view === 'ALL_LIST'"
-          :pokemons="pokemonsFilter"
-          :pokemons-favorites="pokemonsFavorites"
-          @selected="changePokemonSelected"
+    <transition name="fade">
+      <loading v-if="isLoad"></loading>
+      <div class="pokemon-list mb-24 mt-8" v-else>
+        <pokemon-search v-model="search"></pokemon-search>
+        <div class="mt-8" v-if="!isEmpty">
+          <pokemon-empty-list></pokemon-empty-list>
+        </div>
+        <div class="mt-8" v-else>
+          <pokemon-list
+            v-if="view === 'ALL_LIST'"
+            :pokemons="pokemonsFilter"
+            :pokemons-favorites="pokemonsFavorites"
+            @selected="changePokemonSelected"
+            @addFavorite="addFavorite"
+            @removeFavorite="removeFavorite"
+          ></pokemon-list>
+          <pokemon-list
+            v-else
+            :pokemons="pokemonsFavoritesFilter"
+            :pokemons-favorites="pokemonsFavorites"
+            @selected="changePokemonSelected"
+            @addFavorite="addFavorite"
+            @removeFavorite="removeFavorite"
+          ></pokemon-list>
+        </div>
+        <pokemon-footer @changeView="changeView" :view="view"></pokemon-footer>
+        <pokemon-detail
+          v-if="isModal"
+          :pokemon="pokemonSelected"
+          :is-fav="isFav"
+          @close="pokemonCloseMoldal"
           @addFavorite="addFavorite"
           @removeFavorite="removeFavorite"
-        ></pokemon-list>
-        <pokemon-list
-          v-else
-          :pokemons="pokemonsFavoritesFilter"
-          :pokemons-favorites="pokemonsFavorites"
-          @selected="changePokemonSelected"
-          @addFavorite="addFavorite"
-          @removeFavorite="removeFavorite"
-        ></pokemon-list>
+        ></pokemon-detail>
       </div>
-      <pokemon-footer @changeView="changeView" :view="view"></pokemon-footer>
-      <pokemon-detail
-        v-if="isModal"
-        :pokemon="pokemonSelected"
-        :is-fav="isFav"
-        @close="pokemonCloseMoldal"
-        @addFavorite="addFavorite"
-        @removeFavorite="removeFavorite"
-      ></pokemon-detail>
-    </div>
+    </transition>
   </layout>
 </template>
 <script>
