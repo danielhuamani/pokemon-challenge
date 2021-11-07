@@ -5,7 +5,7 @@
       <div class="flex justify-center items-center h-full">
         <container class="relative">
           <div class="rounded-lg overflow-hidden">
-            <div class="absolute right-5 top-3" @click="close">
+            <div class="absolute right-5 top-3" @click="close" data-testid="modal-close">
               <img src="@/assets/icons/close.png" alt="" />
             </div>
             <div class="bg-white">

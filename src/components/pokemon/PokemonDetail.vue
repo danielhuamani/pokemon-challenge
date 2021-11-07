@@ -7,7 +7,7 @@
       <ul>
         <li class="py-2 pokemon-border">
           <p class="text-lg text-text" data-testid="pokemon-name">
-            <span class="font-semibold">Name:</span> {{ pokemon.name }}
+            <span class="font-semibold">Name:</span> {{ pokemon.name | capitalize }}
           </p>
         </li>
         <li class="py-2 pokemon-border">
@@ -16,7 +16,7 @@
           </p>
         </li>
         <li class="py-2 pokemon-border">
-          <p class="text-lg text-text" data-testid="pokemon-hegiht">
+          <p class="text-lg text-text" data-testid="pokemon-height">
             <span class="font-semibold">Height:</span> {{ pokemon.height }}
           </p>
         </li>
@@ -77,6 +77,7 @@ export default {
       input.select()
       document.execCommand("Copy")
       input.remove()
+      return info
     },
     addFavorite() {
       this.$emit("addFavorite", this.pokemon.name)
@@ -87,7 +88,7 @@ export default {
   },
   computed: {
     getTypes() {
-      return this.pokemon.types.join(",")
+      return this.pokemon.types.join(", ")
     }
   }
 }

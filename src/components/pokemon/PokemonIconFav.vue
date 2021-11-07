@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pokemon-fav">
     <img
       v-if="isFav"
       @click="removeFavorite()"

@@ -15,6 +15,7 @@
             @selected="changePokemonSelected"
             @addFavorite="addFavorite"
             @removeFavorite="removeFavorite"
+            dat-testid="view-all-list"
           ></pokemon-list>
           <pokemon-list
             v-else
@@ -23,6 +24,7 @@
             @selected="changePokemonSelected"
             @addFavorite="addFavorite"
             @removeFavorite="removeFavorite"
+            data-testid="view-favorites"
           ></pokemon-list>
         </div>
         <pokemon-footer @changeView="changeView" :view="view"></pokemon-footer>
@@ -88,6 +90,7 @@ export default {
   methods: {
     async getPokemons() {
       const response = await PokemonRepository.get()
+      console.log(response.data, "responseresponseresponse")
       this.pokemons = response.data.results
     },
     async getPokemonsFavorite() {
@@ -121,7 +124,7 @@ export default {
         const { data } = await PokemonRepository.getByName(name)
         this.pokemonSelected["name"] = data.name
         this.pokemonSelected["weight"] = data.weight
-        this.pokemonSelected["height"] = data.name
+        this.pokemonSelected["height"] = data.height
         this.pokemonSelected["img"] = data.sprites.other["official-artwork"].front_default
         this.pokemonSelected["types"] = data.types.map((type) => {
           return type.type.name

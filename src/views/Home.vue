@@ -2,7 +2,7 @@
   <layout>
     <div class="home text-center">
       <img src="@/assets/images/pikachu.png" alt="" class="mx-auto mb-10" />
-      <h3 class="font-bold mb-10 text-3xl">Welcome to Pokédex</h3>
+      <h3 class="font-bold mb-10 text-3xl" data-testid="welcome">Welcome to Pokédex</h3>
       <p class="block mb-8 text-lg">
         The digital encyclopedia created by Professor Oak is an invaluable tool to
         Trainers in the Pokémon world.
