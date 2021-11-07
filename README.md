@@ -25,7 +25,7 @@ yarn build
 yarn test:unit
 ```
 
-### Run your end-to-end tests
+### Run your test with coverage
 ```
 yarn test:e2e
 ```
@@ -35,5 +35,5 @@ yarn test:e2e
 yarn lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+Demo: https://prod.d1y1hr98yg6m3l.amplifyapp.com/
