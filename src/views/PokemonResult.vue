@@ -90,7 +90,6 @@ export default {
   methods: {
     async getPokemons() {
       const response = await PokemonRepository.get()
-      console.log(response.data, "responseresponseresponse")
       this.pokemons = response.data.results
     },
     async getPokemonsFavorite() {
@@ -100,6 +99,7 @@ export default {
     async addFavorite(name) {
       try {
         const response = await PokemonFavoriteRepository.post(name)
+        console.log(response, "favoirtes")
         this.pokemonsFavorites = response
       } catch (error) {
         console.log(error)
