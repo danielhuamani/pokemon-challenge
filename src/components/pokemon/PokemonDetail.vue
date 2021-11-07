@@ -6,7 +6,7 @@
     <div class="p-4">
       <ul>
         <li class="py-2 pokemon-border">
-          <p class="text-lg text-text" data-testid="pokemon-name">
+          <p class="text-lg text-text" data-testid="pokemon-detail-name">
             <span class="font-semibold">Name:</span> {{ pokemon.name | capitalize }}
           </p>
         </li>

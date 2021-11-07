@@ -20,7 +20,7 @@ describe("PokemonDetail.vue", () => {
     })
   })
   it("Should show renders props", () => {
-    const pokemonName = wrapper.find('[data-testid="pokemon-name"]')
+    const pokemonName = wrapper.find('[data-testid="pokemon-detail-name"]')
     const pokemonWeight = wrapper.find('[data-testid="pokemon-weight"]')
     const pokemonHeight = wrapper.find('[data-testid="pokemon-height"]')
     const pokemonTypes = wrapper.find('[data-testid="pokemon-types"]')

@@ -1,5 +1,10 @@
+
 # pokemon-challenge
 
+## Tech Stack
+- tailwindcss: allowed me to create user interfaces very fast and without writing much css code
+- localstorage: allowed me to persist the data on the client
+- jest: helped me run the test
 ## Project setup
 ```
 yarn install

@@ -1,11 +1,14 @@
 import { shallowMount, createLocalVue, mount } from "@vue/test-utils"
 import PokemonResult from "@/views/PokemonResult.vue"
 import PokemonItem from "@/components/pokemon/PokemonItem.vue"
-// import PokemonRepository from "@/repositories/PokemonRepository"
+import PokemonRepository from "@/repositories/PokemonRepository"
 import PokemonFavoriteRepository from "@/repositories/PokemonFavoriteRepository"
 import "@/filters"
+import axios from "axios"
 
-// let PokemonFavoriteRepository
+jest.mock("@/repositories/PokemonRepository")
+jest.fn().mockImplementationOnce(() => Promise.reject("error"))
+
 let wrapper
 
 describe("PokemonResult.vue", () => {
@@ -36,15 +39,7 @@ describe("PokemonResult.vue", () => {
         }
       }
     })
-    // PokemonRepository.get = jest.fn()
-
-    // PokemonFavoriteRepository = jest.fn({
-    //   get: () => {
-    //     return new Promise((resolve) => {
-    //       resolve([{ name: "pikachu" }, { name: "bulbasaur" }, { name: "venusaur" }])
-    //     })
-    //   }
-    // })
+    PokemonRepository.getByName.mockClear()
   })
   it("Should call view all list default", () => {
     wrapper.find('[data-testid="view-all-list"]')
@@ -115,5 +110,46 @@ describe("PokemonResult.vue", () => {
       ]
     })
     expect(wrapper.vm.isEmpty).toBe(false)
+  })
+  it("Should call detail pokemon by name", async () => {
+    await wrapper.setData({
+      view: "ALL_LIST",
+      pokemons: [
+        { name: "pikachu" },
+        { name: "bulbasaur" },
+        { name: "venusaur" },
+        { name: "charizard" },
+        { name: "charmander" },
+        { name: "squirtle" },
+        { name: "wartortle" }
+      ],
+      isLoad: false
+    })
+    let response = {
+      data: {
+        name: "pikachu",
+        weight: 20,
+        height: 30,
+        types: [{ type: "normal" }, { type: "attack" }],
+        sprites: {
+          other: {
+            "official-artwork": {
+              front_default:
+                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png"
+            }
+          }
+        }
+      }
+    }
+    // axios.get.mockResolvedValue(data)
+    PokemonRepository.getByName.mockImplementation(() => response)
+
+    const pokemonNames = wrapper.findAll('[data-testid="pokemon-name"]')
+    pokemonNames.at(0).trigger("click")
+    wrapper.vm.$nextTick().then(() => {
+      expect(wrapper.vm.pokemonSelected.name).toEqual("pikachu")
+      expect(wrapper.vm.pokemonSelected.weight).toEqual(20)
+      expect(wrapper.vm.pokemonSelected.height).toEqual(30)
+    })
   })
 })

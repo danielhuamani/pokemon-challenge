@@ -8,7 +8,7 @@ describe("PokemonSearch.vue", () => {
     wrapper = shallowMount(PokemonSearch, { propsData: { value: "hello world" } })
   })
   it("render input", () => {
-    wrapper.find('[data-testid="pokemon-name"]')
+    wrapper.find('[data-testid="input"]')
     expect(wrapper.exists()).toBe(true)
   })
 })
