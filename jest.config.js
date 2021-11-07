@@ -4,9 +4,10 @@ module.exports = {
     "src/**/*.{js,vue}",
     "!src/main.js",
     "!src/router/index.js",
-    "!src/store/index.js"
+    "!src/store/index.js",
+    "!src/aws-exports.js"
   ],
-  modulePathIgnorePatterns: ["repositories"],
+  modulePathIgnorePatterns: ["repositories", "amplify"],
   moduleFileExtensions: ["js", "json", "vue"],
   transform: {
     "^.+\\.js$": "babel-jest",

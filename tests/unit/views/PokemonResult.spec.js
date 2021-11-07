@@ -2,15 +2,10 @@ import { shallowMount, createLocalVue, mount } from "@vue/test-utils"
 import PokemonResult from "@/views/PokemonResult.vue"
 import PokemonItem from "@/components/pokemon/PokemonItem.vue"
 import PokemonRepository from "@/repositories/PokemonRepository"
-import PokemonFavoriteRepository from "@/repositories/PokemonFavoriteRepository"
 import "@/filters"
-import axios from "axios"
-
-jest.mock("@/repositories/PokemonRepository")
-jest.fn().mockImplementationOnce(() => Promise.reject("error"))
 
 let wrapper
-
+let PokemonRepositoryMock
 describe("PokemonResult.vue", () => {
   beforeEach(() => {
     const localVue = createLocalVue()
@@ -39,7 +34,7 @@ describe("PokemonResult.vue", () => {
         }
       }
     })
-    PokemonRepository.getByName.mockClear()
+    // PokemonRepository.getByName.mockClear()
   })
   it("Should call view all list default", () => {
     wrapper.find('[data-testid="view-all-list"]')
@@ -141,9 +136,8 @@ describe("PokemonResult.vue", () => {
         }
       }
     }
-    // axios.get.mockResolvedValue(data)
-    PokemonRepository.getByName.mockImplementation(() => response)
-
+    const mock = jest.spyOn(PokemonRepository, "getByName")
+    mock.mockReturnValue(response)
     const pokemonNames = wrapper.findAll('[data-testid="pokemon-name"]')
     pokemonNames.at(0).trigger("click")
     wrapper.vm.$nextTick().then(() => {
@@ -151,5 +145,86 @@ describe("PokemonResult.vue", () => {
       expect(wrapper.vm.pokemonSelected.weight).toEqual(20)
       expect(wrapper.vm.pokemonSelected.height).toEqual(30)
     })
+  })
+
+  it("Should call detail pokemon by name and open modal", async () => {
+    await wrapper.setData({
+      view: "ALL_LIST",
+      pokemons: [
+        { name: "pikachu" },
+        { name: "bulbasaur" },
+        { name: "venusaur" },
+        { name: "charizard" },
+        { name: "charmander" },
+        { name: "squirtle" },
+        { name: "wartortle" }
+      ],
+      isLoad: false
+    })
+    let response = {
+      data: {
+        name: "pikachu",
+        weight: 20,
+        height: 30,
+        types: [{ type: "normal" }, { type: "attack" }],
+        sprites: {
+          other: {
+            "official-artwork": {
+              front_default:
+                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png"
+            }
+          }
+        }
+      }
+    }
+    const mock = jest.spyOn(PokemonRepository, "getByName")
+    mock.mockReturnValue(response)
+    const pokemonNames = wrapper.findAll('[data-testid="pokemon-name"]')
+    pokemonNames.at(0).trigger("click")
+    wrapper.vm.$nextTick().then(() => {
+      expect(wrapper.vm.pokemonSelected.name).toEqual("pikachu")
+      expect(wrapper.vm.pokemonSelected.weight).toEqual(20)
+      expect(wrapper.vm.pokemonSelected.height).toEqual(30)
+      expect(wrapper.vm.isModal).toBe(true)
+    })
+  })
+
+  it("Should call detail then close modal", async () => {
+    await wrapper.setData({
+      view: "ALL_LIST",
+      pokemons: [
+        { name: "pikachu" },
+        { name: "bulbasaur" },
+        { name: "venusaur" },
+        { name: "charizard" },
+        { name: "charmander" },
+        { name: "squirtle" },
+        { name: "wartortle" }
+      ],
+      isLoad: false
+    })
+    let response = {
+      data: {
+        name: "pikachu",
+        weight: 20,
+        height: 30,
+        types: [{ type: "normal" }, { type: "attack" }],
+        sprites: {
+          other: {
+            "official-artwork": {
+              front_default:
+                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png"
+            }
+          }
+        }
+      }
+    }
+    const mock = jest.spyOn(PokemonRepository, "getByName")
+    mock.mockReturnValue(response)
+    const pokemonNames = wrapper.findAll('[data-testid="pokemon-name"]')
+    pokemonNames.at(0).trigger("click")
+    await wrapper.vm.$nextTick()
+    wrapper.find('[data-testid="modal-close"]').trigger("click")
+    expect(wrapper.vm.isModal).toBe(false)
   })
 })
